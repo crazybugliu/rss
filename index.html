@@ -38,11 +38,16 @@
           <h2>{{selRss.title}}</h2>
           <ul compact="list-group"></ul>
           <li v-for="e in selRss.entries" class="list-group-item" style="border: none;">
-            <a @click="selectEntry(e)" href="#" style="font-size: 16px;  font-weight: bold;">{{e.title}}</a>
+          	<div style="float: left; width: 100px; height: 70px; margin-right: 5px;">
+          		<img v-if="e.cover" v-bind:src="e.cover" style="width: 80px; height: 50px">
+          	</div>
             <div>
-              <span style="color: #999;">{{e.publishedDate}}</span>
+              <a @click="selectEntry(e)" href="#" style="font-size: 16px;  font-weight: bold;">{{e.title}}</a>
+              <div>
+                <span style="color: #999;">{{e.publishedDate}}</span>
+              </div>
+              <span v-html="e.contentSnippet" style="color: #666;font-size: 12px;"></span>
             </div>
-            <span v-html="e.contentSnippet" style="color: #666;font-size: 12px;"></span>
           </li>
         </div>
         <div v-else>

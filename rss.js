@@ -40,7 +40,7 @@
             }
         });
 
-        var urlTmpl = "http://ajax.googleapis.com/ajax/services/feed/load?num=10&v=1.0&q={url}&callback=?";
+        var urlTmpl = "//ajax.googleapis.com/ajax/services/feed/load?num=10&v=1.0&q={url}&callback=?";
         for (var i = 0; i < rssUlrs.length; i++) {
             var url = urlTmpl.replace('{url}', rssUlrs[i]);
             $.getJSON(url, function(data) {

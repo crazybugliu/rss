@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <title>RSS订阅列表</title>
+  <meta charset="utf-8">
+  <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <script src="//cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="//cdn.bootcss.com/vue/2.1.6/vue.js"></script>
+  <script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+</head>
+
+<body class="" style="height: 100%; overflow-x: hidden;">
+  <div class="row" id="con" style="height: 100%;">
+    <div class="col-md-3" v-bind:style="{height: viewHeight, overflow: 'auto'}" style="background-color: #eee;">
+      <ul class="list-group">
+        <template v-for="r in rssList">
+          <li class="list-group-item" style="cursor: pointer;" @click="selectRss(r)">
+            <span class="badge">{{r.entries.length}}</span> {{r.title}}
+          </li>
+        </template>
+      </ul>
+    </div>
+    <div class="col-md-9" v-bind:style="{height: viewHeight, overflow: 'auto'}">
+      <ul class="nav nav-pills" style="position: fixed; margin-left: -15px; z-index: 9; width: 100%; 
+         background-color: #fff; border-bottom: 1px solid #ededed; box-shadow: 0px 1px #eee;">
+        <template v-show="!!selEntry">
+          <li><a @click="back2list" href="#">返回</a></li>
+          <li><a @click="content2Top" href="#">Top</a></li>
+        </template>
+      </ul>
+      <div class="center-block" id="content" style="max-width: 900px; padding-top: 40px;">
+        <h1 v-if="!selEntry && selRss.length==0" style="color: #999;">
+					欢迎
+				</h1>
+        <div v-if="!selEntry">
+          <h2>{{selRss.title}}</h2>
+          <ul compact="list-group"></ul>
+          <li v-for="e in selRss.entries" class="list-group-item" style="border: none;">
+          	<div style="float: left; width: 100px; height: 70px; margin-right: 5px;">
+          		<img v-if="e.cover" v-bind:src="e.cover" style="width: 80px; height: 50px">
+          	</div>
+            <div>
+              <a @click="selectEntry(e)" href="#" style="font-size: 16px;  font-weight: bold;">{{e.title}}</a>
+              <div>
+                <span style="color: #999;">{{e.publishedDate}}</span>
+              </div>
+              <span v-html="e.contentSnippet" style="color: #666;font-size: 12px;"></span>
+            </div>
+          </li>
+        </div>
+        <div v-else>
+          <h2>{{selEntry.title}}</h2>
+          <div style="color: #999; padding-bottom: 18px;">
+            <span>{{selEntry.publishedDate}}</span>
+            <span v-for="t in selEntry.categories" class="badge">{{t}}</span>
+          </div>
+          <div v-html="selEntry.content">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="rss.js"></script>
+</body>
+
+</html>

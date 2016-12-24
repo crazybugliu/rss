@@ -43,7 +43,19 @@
         for (var i = 0; i < rssUlrs.length; i++) {
             var url = urlTmpl.replace('{url}', rssUlrs[i]);
             $.getJSON(url, function(data) {
-                scope.rssList.push(data.responseData.feed);
+                var feed = data.responseData.feed;
+                for (var j = 0; j < feed.entries.length; j++) {
+                    var str = feed.entries[j].content;
+                    var reg = new RegExp("(<img.*src=\"\.*?\>)");
+                    str.match(reg); //从字符串str中查找src="img.path"这段字符串
+                    var re = /src="([^"]*)"/g; //只查找 img.path 这段路径
+                    var arr = re.exec(str)
+                    if(arr&&arr.length>1){
+                      feed.entries[j].cover = arr[1];
+                    }
+                }
+
+                scope.rssList.push(feed);
                 // if(!scope.selEntry){
                 //  setTimeout(function(){
                 //    scope.selEntry = data.responseData.feed;

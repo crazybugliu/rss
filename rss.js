@@ -5,7 +5,6 @@
         "http://coolshell.cn/feed",
         "http://blog.sina.com.cn/rss/1228571733.xml",
         "http://www.rowkey.me/atom.xml",
-        "http://coolshell.cn/feed",
         "http://blog.codingnow.com/atom.xml",
     ];
     var scope = {
